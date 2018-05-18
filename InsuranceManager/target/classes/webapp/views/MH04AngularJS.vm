@@ -1,0 +1,242 @@
+<html>
+<head>
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/mystyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/showhide.js"></script>
+<script type="text/javascript" src="../js/calendar.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+<link
+	href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+	rel="stylesheet">
+
+
+<script src="../jstest/angular.min.js"></script>
+<script src="../jstest/Addapp.js"></script>
+<script src="../jstest/service/addservice.js"></script>
+<script src="../jstest/controller/addcontroller.js"></script>
+<script>
+	function btnClick() {
+		sessionStorage.removeItem("tblUserSession");
+	}
+</script>
+<script>
+	function radio1Change() {
+		var item = document.getElementById("Show");
+		var item2 = document.getElementById("Hide");
+		var radioBtn = document.getElementById("companyName1");
+		if (item.style.display == "none") {
+			item.style.display = "block";
+			item2.style.display = "none";
+			radioBtn.disabled = true;
+		}
+	}
+
+	function radioChange() {
+		var item = document.getElementById("Show");
+		var item2 = document.getElementById("Hide");
+		var radioBtn = document.getElementById("companyName2");
+
+		if (item2.style.display == "none") {
+			item2.style.display = "block";
+			item.style.display = "none";
+			radioBtn.disabled = true;
+		}
+	}
+</script>
+</head>
+<body ng-app="myAppAdd" ng-controller="AddController as add">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="col-md-1 col-md-offset-11">
+						<a onclick="return btnClick();" href="/logout">Louout</a>
+					</div>
+					<div>
+						<h2>Thêm mới thông tin thẻ bảo hiểm</h2>
+					</div>
+
+					<form>
+						<div class="form-group">
+							<label for="message" style="color: red;"> $errorMessage </label>
+						</div>
+						<div class="form-group">
+							<label for="insurance_number" class="col-sm-3 control-label">Mã
+								số thẻ bảo hiểm </label>
+							<div class="col-sm-7">
+								<input type="text" name="tblInsurance.insuranceNumber"
+									ng-model= "add.userAdd.tblInsurance.insuranceNumber" value="{{add.userAdd.tblInsurance.insuranceNumber}}"
+									class="form-control" autofocus>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="user_full_name" class="col-sm-3 control-label">Họ
+								và tên</label>
+							<div class="col-sm-7">
+								<input type="text" name="userFullname"
+									ng-model= "add.userAdd.userFullname" value="{{add.userAdd.userFullname}}" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="user_sex_division" class="col-sm-3 control-label">Giới
+								tính </label>
+							<div class="col-md-2">
+								<select class="form-control" name="userSexDivision" ng-model="add.userAdd.userSexDivision">
+									<option  value="01">Nam</option>
+									<option  value="02">Nữ</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Ngày sinh </label>
+							<div class="col-sm-6">
+								<input type="text" id="birthdate" name="birthdate"
+								  ng-model="add.userAdd.birthdate"
+									value="{{add.userAdd.birthdate | date: dd/MM/yyyy}}"
+									class=""> <label for="birthdate"><img
+									src="/images/calendar.png" class="" /> </label>
+							</div>
+						</div>
+
+						<div class="col-md-7 col-md-offset-3">
+							<input onChange="radioChange();" type="radio" name="companyName"
+								id="companyName1" value="1" checked="checked" /><label
+								for="companyName1">Công ty đã có</label>
+						</div>
+						</br>
+
+						<div id="Hide" style="display: block">
+							<label class="col-sm-3 control-label">Công ty</label>
+							<div class="col-md-3">
+								<select class="" id="selectCompanyName" ng-model="add.listCom.companyInternalId" ng-change="add.comChange();">
+									<option ng-repeat="companys in add.listCom" value="{{companys.companyInternalId}}">{{companys.companyName}}</option>
+								</select><br />
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Tên công ty </label>
+									<div class="col-md-7">
+										<span ng-model="add.comInfo.companyName">{{add.comInfo.companyName}} </span>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Địa chỉ </label>
+									<div class="col-md-7">
+										<p ng-model="add.comInfo.address">{{add.comInfo.address}}</p>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Email </label>
+									<div class="col-md-7">
+										<a ng-model="add.comInfo.email">{{add.comInfo.email}}</a>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Điện thoại </label>
+									<div class="col-md-7">
+										<p ng-model="add.comInfo.telephone">{{add.comInfo.telephone}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div></div>
+						<div class="col-md-7 col-md-offset-3">
+							<input onChange="radio1Change();" type="radio" name="companyName"
+								id="companyName2" value="2" /><label for="companyName2">Đăng
+								ký theo công ty mới</label>
+						</div>
+
+						<div id="Show" style="display: none">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Tên công ty </label>
+								<div class="col-md-7">
+									<input type="text" id="companyNameNew" ng-model="add.userAdd.tblCompany.companyName"
+										value="{{add.userAdd.tblCompany.companyName}}" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Địa chỉ </label>
+								<div class="col-md-7">
+									<input type="text" ng-model="add.userAdd.tblCompany.address"
+										class="form-control" value="{{add.userAdd.tblCompany.address}}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Email </label>
+								<div class="col-md-7">
+									<input type="text" ng-model="add.userAdd.tblCompany.email" class="form-control"
+										value="{{add.userAdd.tblCompany.email}}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Điện thoại </label>
+								<div class="col-md-7">
+									<input type="text" ng-model="add.userAdd.tblCompany.telephone"
+										class="form-control" value="{{add.userAdd.tblCompany.telephone}}">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Nơi đăng ký KCB </label>
+							<div class="col-md-7">
+								<input type="text" name="tblInsurance.placeOfRegister"
+									class="form-control" ng-model = "add.userAdd.tblInsurance.placeOfRegister"
+									value="{{add.userAdd.tblInsurance.placeOfRegister}}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Ngày bắt đầu thẻ BH
+							</label>
+							<div class="col-md-7">
+								<input type="text" id="insuranceStartDate"
+									name="tblInsurance.insuranceStartDate"
+									ng-model="add.userAdd.tblInsurance.insuranceStartDate"
+									value="{{add.userAdd.tblInsurance.insuranceStartDate | date: dd/MM/yyyy}}"
+									class=""> <label for="insuranceStartDate"><img
+									src="/images/calendar.png" class="" /> </label>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Ngày kết thúc thẻ
+								BH </label>
+							<div class="col-md-7">
+								<input type="text" id="insuranceEndDate"
+									name="tblInsurance.insuranceEndDate"
+									ng-model="add.userAdd.tblInsurance.insuranceEndDate"
+									value="{{add.userAdd.tblInsurance.insuranceEndDate | date: dd/MM/yyyy}}"
+									class=""> <label for="insuranceEndDate"><img
+									src="/images/calendar.png" class="" /> </label>
+							</div>
+
+						</div>
+				</div>
+				<div class="col-md-10">
+					<div class="col-md-2 col-md-offset-1 ">
+						<button type="submit" name="btnHuy" class="btn btn-primary btnXoa">Hủy</button>
+					</div>
+					<div class="col-md-2">
+						<button type="button" id="dangky" value="1" name="btnDangky"
+							ng-click="add.executeAdd(add.userAdd);" class="btn btn-primary btnUpdate">Đăng
+							ký</button>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

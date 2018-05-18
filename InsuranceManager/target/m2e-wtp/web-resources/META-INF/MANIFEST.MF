@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: InsuranceManager Maven Webapp
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: nguyenthinhphu
+Implementation-Vendor-Id: net.luvina.insurance
+Build-Jdk: 1.8.0_65
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

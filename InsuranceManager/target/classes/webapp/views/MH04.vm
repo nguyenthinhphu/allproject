@@ -1,0 +1,276 @@
+<html>
+<head>
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/mystyle.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="../js/showhide.js"></script>
+	<script type="text/javascript" src="../js/calendar.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+	
+	<script>
+ 	function btnClick(){ 
+ 		if(document.)
+  	 sessionStorage.removeItem("tblUserSession"); 
+ 	 } 
+ 	</script> 
+
+<script>
+$(document).ready(function() {
+
+$('#selectCompanyName').change(function(){
+    $.get('/getDataAdd/',{id:$('#selectCompanyName').val()},function(data, success){
+            $('#comName').text(data.companyName);
+            $('#comAddress').text(data.address);
+            $('#comEmail').text(data.email);
+            $('#comTel').text(data.telephone);
+    });
+});
+});
+	</script>
+	<script type="text/javascript">
+	$('#companyName1').load(function(){
+		if($('#companyName1').checked){
+			$('#companyName1').checked = true;
+		}
+		else{
+			$('#companyName1').checked = false;
+		}
+		
+	})
+	</script>
+	<script type="text/javascript">
+	$('#companyName2').load(function(){
+		if($('#companyName2').checked){
+			$('#companyName2').checked = true;
+		}
+		else{
+			$('#companyName2').checked = false;
+		}
+		
+	})
+	</script>
+	<script>
+$(document).ready(function() {
+
+$(window).load(function(){
+    $.get('/getDataAdd/',{id:$('#selectCompanyName').val()},function(data, success){
+            $('#comName').text(data.companyName);
+            $('#comAddress').text(data.address);
+            $('#comEmail').text(data.email);
+            $('#comTel').text(data.telephone);
+    });
+    document.getElementById("birthdate").readOnly = true;
+     document.getElementById("insuranceStartDate").readOnly = true;
+     document.getElementById("insuranceEndDate").readOnly = true;
+    
+});
+});
+	</script>
+	<script>
+	function radio1Change(){
+	var item = document.getElementById("Show");
+	var item2 = document.getElementById("Hide");
+	var radioBtn = document.getElementById("companyName1");
+	if(item.style.display == "none"){
+	item.style.display = "block";
+	item2.style.display = "none";
+	radioBtn.disabled = true;
+	}
+	}
+	
+	function radioChange(){
+	var item = document.getElementById("Show");
+	var item2 = document.getElementById("Hide");
+	var radioBtn = document.getElementById("companyName2");
+	
+	if(item2.style.display == "none"){
+	item2.style.display = "block";
+	item.style.display = "none";
+	radioBtn.disabled = true;
+	}
+	}
+	</script>
+</head>
+<body ng-app="myAppAdd" ng-controller= "AddService as add">
+<div class="row">
+   <div class = "col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+   <div class="panel-body">
+    <div class="col-md-1 col-md-offset-11"> 
+     <a onclick="return btnClick();" href="/logout">Louout</a>
+    </div>
+    <div>
+     <h2>Thêm mới thông tin thẻ bảo hiểm</h2>
+    </div>
+    
+    <form modelAttribute="tblUser" class = "form-horizontal" method ="post">
+     <div class="form-group">
+            <label id="message" for="message" style="color:red;"> $errorMessage </label>
+          </div>
+     <div class="form-group">
+            <label for="insurance_number" class = "col-sm-3 control-label">Mã số thẻ bảo hiểm </label>
+            <div class="col-sm-7">
+             <input type="text" id="insurance" name="tblInsurance.insuranceNumber" value="${tblUser.tblInsurance.insuranceNumber}" class="form-control" autofocus>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="user_full_name" class = "col-sm-3 control-label">Họ và tên</label>
+            <div class="col-sm-7">
+             <input type="text" name="userFullname" value="${tblUser.userFullname}" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="user_sex_division" class = "col-sm-3 control-label">Giới tính </label>
+            <div class = "col-md-2">
+             <select class = "form-control" name="userSexDivision">
+             #if($userSexDivision == "01")
+          <option value="01">Nam</option>
+          <option value="02">Nữ</option>
+          #elseif($userSexDivision == "02")
+          <option value="02">Nữ</option>
+          <option value="01">Nam</option>
+          #else
+          <option value="01">Nam</option>
+          <option value="02">Nữ</option>
+          #end
+       </select>
+      </div>
+        </div>
+        <div class="form-group">
+            <label class = "col-sm-3 control-label">Ngày sinh </label>
+            <div class="col-sm-6">
+             <input type="text" id="birthdate" name="birthdate" value="$date.format('dd/MM/yyyy', ${tblUser.birthdate})" class="">		    			    	
+			    	<label for="birthdate"><img src="/images/calendar.png" class = ""/> </label>
+              </div>
+           
+        </div>
+        
+        <div class = "col-md-7 col-md-offset-3">
+         <input onChange = "radioChange();" type="radio" name="companyName" id="companyName1" value="1" checked="checked" /><label for="companyName1">Công ty đã có</label>
+        </div>
+        </br>
+		
+        <div id="Hide" style="display: block">
+         <label class = "col-sm-3 control-label">Công ty</label>
+         <div class = "col-md-3">
+          <select class="" id="selectCompanyName" name="selectCompanyName">    
+										#foreach($companys in $listCompanys)
+											#if ($selectCompanyName == $companys.companyName)
+								            	<option selected="selected" value="$companys.companyName">$companys.companyName</option>
+								            	#elseif($companyMH02 == $companys.companyName)
+								            	<option selected="selected" value="$companys.companyName">$companys.companyName</option>
+								            #else
+								            	<option value="$companys.companyName">$companys.companyName</option>
+								        	#end   	    
+								    	#end 		        
+								    </select><br/>
+      </div>
+	  <div class = "col-md-12">
+	  <div class="form-group">
+            <label class = "col-sm-3 control-label">Tên công ty </label>
+            <div class = "col-md-7">
+         <span id="comName"> </span>
+         </div>
+        </div>
+        
+         <div class="form-group">
+            <label class = "col-sm-3 control-label">Địa chỉ </label>
+            <div class = "col-md-7">
+         <p id ="comAddress"> </p>
+         </div>
+        </div>
+        
+         <div class="form-group">
+            <label class = "col-sm-3 control-label">Email </label>
+            <div class = "col-md-7">
+         <a id="comEmail"> </a>
+         </div>
+        </div>
+        
+          <div class="form-group">
+            <label class = "col-sm-3 control-label">Điện thoại </label>
+            <div class = "col-md-7">
+          <p id="comTel"> </p>
+        </div>
+	  </div>
+        </div>
+</div>
+        <div></div>
+        <div class = "col-md-7 col-md-offset-3">
+         <input  onChange = "radio1Change();" type="radio" name="companyName" id="companyName2" value="2" /><label for="companyName2">Đăng ký theo công ty mới</label>
+        </div>
+         
+        <div id="Show" style="display: none">
+         <div class="form-group">
+            <label class = "col-sm-3 control-label">Tên công ty </label>
+            <div class = "col-md-7">
+          <input type="text"  id="companyNameNew" name="companyNameNew" value="${companyNameNew}" class="form-control">
+         </div>
+        </div>
+        
+         <div class="form-group">
+            <label class = "col-sm-3 control-label">Địa chỉ </label>
+            <div class = "col-md-7">
+          <input type="text"  name="tblCompany.address" class="form-control" value = "$tblUser.tblCompany.address">
+         </div>
+        </div>
+        
+         <div class="form-group">
+            <label class = "col-sm-3 control-label">Email </label>
+            <div class = "col-md-7">
+          <input type="text"  name="tblCompany.email" class="form-control" value = "$tblUser.tblCompany.email">
+         </div>
+        </div>
+        
+          <div class="form-group">
+            <label class = "col-sm-3 control-label">Điện thoại </label>
+            <div class = "col-md-7">
+          <input type="text"  name="tblCompany.telephone" class="form-control" value = "$tblUser.tblCompany.telephone">
+         </div>
+        </div>
+          </div>
+        <div class="form-group">
+            <label class = "col-sm-3 control-label">Nơi đăng ký KCB </label>
+            <div class = "col-md-7">
+          <input type="text" name="tblInsurance.placeOfRegister" class="form-control" value = "${tblUser.tblInsurance.placeOfRegister}">
+         </div>
+        </div>
+        
+       <div class="form-group">
+            <label class = "col-sm-3 control-label">Ngày bắt đầu thẻ BH </label>
+            <div class="col-md-7">
+             <input type="text" id="insuranceStartDate" name="tblInsurance.insuranceStartDate" value="$date.format('dd/MM/yyyy', ${tblUser.tblInsurance.insuranceStartDate})" class="">		    			    	
+			    	<label for="insuranceStartDate"><img src="/images/calendar.png" class = ""/> </label>
+              </div>
+           
+        </div>
+        
+        <div class="form-group">
+            <label class = "col-sm-3 control-label">Ngày kết thúc thẻ BH </label>
+            <div class="col-md-7">
+             <input type="text"  id="insuranceEndDate" name="tblInsurance.insuranceEndDate" value="$date.format('dd/MM/yyyy', ${tblUser.tblInsurance.insuranceEndDate})" class="">		    			    	
+			    	<label for="insuranceEndDate"><img src="/images/calendar.png" class = ""/> </label>
+              </div>
+           
+        </div>
+        </div>
+        <div class = "col-md-10">
+     <div class= "col-md-2 col-md-offset-1 "> 
+      <button type="submit" name="btnHuy" class="btn btn-primary btnXoa">Hủy</button>
+      </div>
+      <div class= "col-md-2"> 
+       <button type ="submit" id="dangky" value= "1" name = "btnDangky" class="btn btn-primary btnUpdate">Đăng ký </button>
+      </div>
+     </div>
+
+    
+    </form>
+  </div>
+ </div> 
+  </div>
+</div>
+</body>
+</html>

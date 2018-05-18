@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> MH03 </title> <!–Tiêu đề trang web–>
+<meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
+<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″/>
+<meta http-equiv=”X-UA-Compatible” content=”IE=edge”>
+<link rel="stylesheet" href="../css/mystyle.css" type="text/css" />
+<link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="../css/bootstrap-theme.min.css" type="text/css">
+	<script>
+	function btnClick(){
+	 sessionStorage.removeItem("tblUserSession");
+	 }
+	</script>
+</head>
+<body>
+<div class="row">
+   <div class = "col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+   <div class="panel-body">
+    <div class="col-md-1 col-md-offset-11"> 
+     <a onclick="return btnClick();" href="/logout">Louout</a>
+    </div>
+    <div>
+<div class ="container">
+<h3> Chi tiết thông tin thẻ bảo hiểm </h3>
+<form method="post">
+<div class ="col-xs-7" id="btnQuaylai" >
+<button type="button"  onclick="window.history.back()" name="btnQuaylai" class="btn btn-primary">Quay lại</button>
+</div>
+<div>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td>Mã số thẻ bảo hiểm</td>
+                <td>$userDetail.tblInsurance.insuranceNumber</td>
+              </tr>
+              <tr>
+                <td>Họ và tên</td>
+                <td>$userDetail.userFullname</td>
+              </tr>
+			   <tr>
+                <td>Giới tính</td>
+                #if($userDetail.userSexDivision=="01")
+                <td>Nam</td>
+                #else
+                <td> Nữ </td>
+                #end
+              </tr>
+			   <tr>
+                <td>Ngày sinh</td>
+                <td>$date.format("dd/MM/yyyy",$userDetail.birthdate)</td>
+              </tr>
+			   <tr>
+                <td>Tên công ty</td>
+                <td>$userDetail.tblCompany.companyName</td>
+              </tr>
+			   <tr>
+                <td>Nơi đăng ký KCB</td>
+                <td>$userDetail.tblInsurance.placeOfRegister</td>
+              </tr>
+			   <tr>
+                <td>Kỳ hạn thẻ bảo hiểm</td>
+                <td>$date.format("dd/MM/yyyy",$userDetail.tblInsurance.insuranceStartDate) đến $date.format("dd/MM/yyyy",$userDetail.tblInsurance.insuranceEndDate)</td>
+              </tr>
+			</div>
+			<div>
+<div class="col-xs-1"> <input type="submit" name="btnXoa" onclick="return confirm('Bạn có muốn xóa user?')"  value ="Xóa" class="btn btn-primary"></input> </div>
+<input type="button" onclick="location.href = '/update';" value = "Cập nhật" class="btn btn-primary"></input>
+</div>
+</form>
+</div>
+
+<!– jQuery (necessary for Bootstrap’s JavaScript plugins) –>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!– Include all compiled plugins (below), or include individual files as needed –>
+    <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

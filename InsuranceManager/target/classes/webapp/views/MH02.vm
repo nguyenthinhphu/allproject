@@ -1,0 +1,132 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css"  href="../css/mystyle.css">
+<link rel="stylesheet" type="text/css"  href="../css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css"  href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+
+<script src="../js/angular.min.js"></script>
+<script src="../js/application.js"></script>
+<script src="../js/service/userService.js"></script>
+<script src="../js/controller/userController.js"></script>
+	<script>
+	function btnClick(){
+	 sessionStorage.removeItem("tblUserSession");
+	 }
+	</script>
+</head>
+<body ng-app="myApp" ng-controller= "UserController as con">
+#parse('Pagging.vm');
+<div class="row">
+   <div class = "col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+   <div class="panel-body">
+    <div class="col-md-1 col-md-offset-11"> 
+     <a onclick="return btnClick();" href="/logout">Louout</a>
+    </div>
+    <div>
+    
+<div class ="container">
+<h3> Danh sách thẻ bảo hiểm </h3>
+<div>
+<strong>
+Tên công ty
+</strong>
+<form ng-submit = "con.submit()" method="post">
+<div class="tencongty">
+<select class="" id="selectCompanyName" name="selectCompanyName" ng-model = "con.tblUser.tblCompany.companyName" >	    	   
+		            	<option ng-repeat = "company in con.listView.listCompany" value="{{company.companyName}}">{{company.companyName}}</option>
+	    		        
+		    </select> 
+
+<!-- <select class="" id="selectCompanyName" name="selectCompanyName" ng-options = "option.companyName for option in con.listView.listCompany track by option.companyInternalId" ng-model = "con.listView.listCompany[0]"> </select>  -->
+</div>
+</div>
+
+<div class="thongtintimkiem">
+<p> <strong>Thông tin tìm kiếm</strong> </p>
+<div class = "col-xs-6" >
+Tên người sử dụng : 
+</div>
+<div class = "col-md-6">
+<input ng-model = "con.tblUser.userFullname" name="userFullname" value="{{con.tblUser.userFullname}}" class="form-control"/><br/>
+</div> 
+<div class = "col-xs-6" >
+Mã số thẻ bảo hiểm
+</div>
+<div class = "col-md-6">
+<input ng-model = "con.tblUser.tblInsurance.insuranceNumber" name="tblInsurance.insuranceNumber" value="${tblUser.tblInsurance.insuranceNumber}" class="form-control"/><br/>
+</div> 
+<div class = "col-xs-6" >
+Nơi đăng kí
+</div>
+<div class = "col-md-6">
+<input ng-model = "con.tblUser.tblInsurance.placeOfRegister" name="tblInsurance.placeOfRegister" value="${tblUser.tblInsurance.placeOfRegister}" class="form-control"/> <br/>
+</div>
+<div class = "col-md-7" >
+</div>
+<div class="btnTimkiem">
+<input type="submit" name="btnTimKiem" value="Tìm kiếm" class="btn btn-primary"/>
+</div>
+</div>
+</form>
+<div class ="col-xs-6" >
+<button type="button" name="btnDangKy" onclick="location.href = '/add';" class="btn btn-primary"> Đăng kí </a></button>
+</div>
+<div class ="col-xs-6" >
+<button type="button"  onclick="location.href = '/exportCSV';" name="btnExportCSV" ng-show="con.listView.listUser.length > 0" class="btn btn-primary">Export CSV</button>
+</div>
+<div class="bangdulieu">
+<table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Tên người sử dụng
+                <span ng-show = "sortReverse"><a href="" ng-click="sortType = 'userFullname'; sortReverse = !sortReverse" >▲</a>▼</span>
+							<span ng-show = "!sortReverse">▲<a href="" ng-click="sortType = 'userFullname'; sortReverse = !sortReverse" >▼</a></span></th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+				<th>Mã số thẻ bảo hiểm</th>
+				<th>Kỳ hạn</th>
+				<th>Nơi đăng ký KCB</th>
+              </tr>
+            </thead>
+            <tbody>
+			<tr ng-repeat="user in con.listView.listUser | paginate:rowsPerPage | orderBy:sortType:sortReverse">
+			<td>
+			<a href="/info?uid={{user.userInternalId}}&cid={{user.tblCompany.companyInternalId}}&iid={{user.tblInsurance.insuranceInternalId}}">
+			{{user.userFullname}}
+			</a>
+			</td>
+			<td ng-if="user.userSexDivision == 01" align="center">
+			Nam
+			</td>
+			<td ng-if="user.userSexDivision == 02" align="center">
+			Nữ
+			</td>
+			<td>
+			{{user.birthdate| date:"dd/MM/yyyy"}}
+			</td>
+			<td>
+			{{user.tblInsurance.insuranceNumber}}
+			</td>
+			<td>
+			{{user.tblInsurance.insuranceStartDate | date:"dd/MM/yyyy"}} 
+		   		~ {{user.tblInsurance.insuranceEndDate | date:"dd/MM/yyyy"}}
+			</td>
+			<td>
+			{{user.tblInsurance.placeOfRegister}}
+			</td>
+			</tr>
+			 <tr>
+                  <td>
+                      <paginator></paginator>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+          
+</div>
+</div>
+</body>
+</html>

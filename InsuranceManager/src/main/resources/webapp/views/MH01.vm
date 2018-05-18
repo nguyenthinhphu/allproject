@@ -1,0 +1,50 @@
+<html>
+<head>
+	<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="../js/showhide.js"></script>
+	<script type="text/javascript" src="../js/calendar.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+<script>
+$(document).ready(function() {
+
+$(window).load(function(){
+	 sessionStorage.removeItem("tblUserSession");
+});
+});
+	</script>
+</head>
+<body align="center">
+<form modelAttribute="tblUser" method="post">
+<input type="hidden" name="page" value="1"/>
+<input type="hidden" name="sort" value="DESC"/>
+<center>
+<table>
+<label><p style="color:red;"> ${errorMessageMH01} </p></label>
+<tr><h3> Đăng nhập hệ thống</h3> </tr>
+<tr align="left">
+			<td class="lbl_left">Tên đăng nhập:</td>
+			<td align="left">
+				<input class="txBox" type="text" value="$tblUser.username" name="username" size="20" onfocus="this.style.borderColor='#0066ff';"
+				onblur="this.style.borderColor='#aaaaaa';" />
+			</td>
+		</tr>
+<tr>
+			<td class="lbl_left">Mật khẩu:</td>
+			<td align="left">
+				<input class="txBox" type="password" value="$tblUser.password" name="password" size="22" onfocus="this.style.borderColor='#0066ff';"
+				onblur="this.style.borderColor='#aaaaaa';" />
+			</td>
+		</tr>
+<tr>
+			<td></td>
+			<td align="left">
+				<input class = "btn" type="submit" value="Đăng nhập" />
+			</td>
+		</tr>
+</table>
+</center>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<html>
+<head>
+ <title>Spring & Velocity</title>  
+</head>
+<body>
+  <div>
+      #parse("/webapp/fragments/_header.vm")
+  </div>
+  
+  <a href="/login">Logout</a> 
+  <div>
+  
+    <!-- View abc.vm is inserted here -->
+    <!-- Noi dung View abc.vm se duoc tren tai day -->   
+    $screen_content
+ 
+  </div>
+  
+  <div>
+      #parse("/webapp/fragments/_footer.vm")
+  </div>
+</body>
+</html>

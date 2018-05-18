@@ -1,0 +1,205 @@
+<link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+
+<script src="../jstest/angular.min.js"></script>
+<script src="../jstest/app.js"></script>
+<script src="../jstest/service/listservice.js"></script>
+<script src="../jstest/controller/listcontroller.js"></script>
+<body ng-app="UserApp" ng-controller="ListController as list">
+<script type="text/ng-template" id="paginationControl.html">
+    <div class="pagination text-center" ng-show="paginator.pageCount() > 1">
+    <ul>
+        <li ng-click="paginator.firstPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+            <a>
+                <i  ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+            </a>
+        </li>
+        <li ng-click="paginator.perviousPage()" ng-class="paginator.isFirstPage() && 'disabled'">
+            <a>
+                <i class="icon-step-backward" ng-class="paginator.isFirstPage() && 'icon-white'"></i>
+            </a>
+        </li>
+        <li ng-click="paginator.setPage(i)" ng-repeat="i in [] | forLoop:paginator.lowerLimit():paginator.pageCount() | limitTo : paginator.limitPerPage" ng-class="paginator.page==i && 'active'"> 
+            <a> 
+                <i> | {{i+1}}</i> 
+            </a> 
+        </li>
+        <li ng-click="paginator.nextPage()" ng-class="paginator.isLastPage() && 'disabled'">
+            <a>
+                <i class="icon-step-forward" ng-class="paginator.isLastPage() && 'icon-white'"></i>
+            </a>
+        </li>
+        <li ng-click="paginator.lastPage()" ng-class="paginator.isLastPage() && 'disabled'">
+            <a>
+                <i ng-class="paginator.isLastPage() && 'icon-white'"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+  </script>
+	<div id="container">
+		<div>
+			<label>
+				<h1>Danh sách thông tin User</h1>
+			</label>
+		</div>
+
+		<!-- 		Tìm kiếm User -->
+
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Thông tin tìm kiếm</h3>
+						</div>
+						<label> Tên Công ty</label> <select ng-change="list.GetValue()"
+							id="companyId" ng-model="list.listCom.companyInternalId">
+							<option ng-repeat="com in list.listCom"
+								value="{{com.companyInternalId}}">{{com.companyName}}</option>
+						</select> <br />
+						<form ng-submit="list.submit()">
+
+
+							<div class="panel-body">
+
+								<label> Tìm Tên: </label> <input type="text"
+									placeholder="Enter Name"
+									ng-model="list.usersearch.userFullname" /><br /> <label>
+									Tìm Nơi Đăng Kí KCB: </label> <input type="text"
+									ng-model="list.usersearch.tblInsurance.placeOfRegister"
+									placeholder="Enter Place Register" /><br /> <label>
+									Tìm Theo Mã Số Thẻ: </label> <input type="text"
+									placeholder="Enter Card Number"
+									ng-model="list.usersearch.tblInsurance.insuranceNumber" /><br />
+								<input type="submit" value="Tìm" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 		Thêm User -->
+
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Thông tin Thêm</h3>
+						</div>
+						<div class="panel-body">
+							<form>
+								<label> Tên: </label> <input type="text"
+									placeholder="Enter Name" ng-model="list.userAdd.userFullname" /><br />
+								<label> Giới tính </label> <input type="text"
+									placeholder="Enter Sex" ng-model="list.userAdd.userSexDivision" /><br />
+								<label> Ngày sinh </label> <input type="text"
+									placeholder="Enter BirthDate dd/MM/YYYY"
+									ng-model="list.userAdd.birthdate" /><br />
+								<!--              <button type="button" ng-click="Add()" value="Thêm"/> -->
+								<button type="button" ng-click="list.myFunc()"
+									class="btn btn-success custom-width">Thêm</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 		Sửa User -->
+
+		<div class="col-sm-11">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Thông tin Sửa</h3>
+						</div>
+						<div class="panel-body">
+							<form>
+								<label> Tên: </label> <input type="text"
+									placeholder="Enter Name"
+									ng-model="list.UserUpdate.userFullname" /><br /> <label>
+									Giới tính </label> <input type="text" placeholder="Enter Sex"
+									ng-model="list.UserUpdate.userSexDivision" /><br /> <label>
+									Ngày sinh </label> <input type="text"
+									placeholder="Enter BirthDate dd/MM/YYYY"
+									date date-format="short"
+									value="{{list.UserUpdate.birthdate | date: 'dd-MM-yyyy'}}"
+									ng-model="list.UserUpdate.birthdate" /><br /> <label>
+									Mã số thẻ BH </label> <input type="text" placeholder=""
+									ng-model="list.UserUpdate.tblInsurance.insuranceNumber" /><br />
+								<label> Ngày Bắt Đầu </label> <input type="text"
+									placeholder="Start Date"
+									value="{{list.UserUpdate.tblInsurance.insuranceStartDate | date: 'dd-MM-yyyy'}}"
+									ng-model="list.UserUpdate.tblInsurance.insuranceStartDate" date date-format="short"/><br />
+								<label> Ngày Kết Thúc</label> <input type="text"
+									placeholder="End Date"
+									value="{{list.UserUpdate.tblInsurance.insuranceEndDate | date: 'dd-MM-yyyy'}}"
+									ng-model="list.UserUpdate.tblInsurance.insuranceEndDate" /><br />
+								<label> Nơi đăng ký </label> <input type="text"
+									placeholder="Place"
+									ng-model="list.UserUpdate.tblInsurance.placeOfRegister" /><br />
+								<!--              <button type="button" ng-click="Add()" value="Sửa"/> -->
+								<!--  Đoạn này Bind rất hay khi đổi ngược lại 2 tham số -->
+								<button type="button" ng-click="list.updateUs(list.UserUpdate)"
+									class="btn btn-success custom-width">Sửa</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div>
+			<div class="col-sm-8">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Tên người sử dụng <span ng-show="sortReverse"><a
+									href=""
+									ng-click="sortType = 'userFullname'; sortReverse = !sortReverse">▲</a>▼</span>
+								<span ng-show="!sortReverse">▲<a href=""
+									ng-click="sortType = 'userFullname'; sortReverse = !sortReverse">▼</a></span></th>
+							<th>Giới tính</th>
+							<th>Ngày sinh</th>
+							<th>Mã số thẻ bảo hiểm</th>
+							<th>Kỳ hạn</th>
+							<th>Nơi đăng ký KCB</th>
+						</tr>
+					</thead>
+					<tbody ng-model="list.rowsPerPage">
+						<tr
+							ng-repeat="user in list.users |filter:username| paginate:rowsPerPage | orderBy:sortType:sortReverse">
+							<td><a href=""
+								ng-click="list.getUserUpdate(user.userInternalId)">
+									{{user.userFullname}} </a></td>
+							<td ng-if="user.userSexDivision == 01" align="center">Nam</td>
+							<td ng-if="user.userSexDivision == 02" align="center">Nữ</td>
+							<td>{{user.birthdate| date:"dd/MM/yyyy"}}</td>
+							<td>{{user.tblInsurance.insuranceNumber}}</td>
+							<td>{{user.tblInsurance.insuranceStartDate |
+								date:"dd/MM/yyyy"}} ~ {{user.tblInsurance.insuranceEndDate |
+								date:"dd/MM/yyyy"}}</td>
+							<td>{{user.tblInsurance.placeOfRegister}}</td>
+							<td><a href="" ng-click="list.deleteU(user.userInternalId)">
+									Delete</a></td>
+						</tr>
+						 <tr>
+                  <td>
+                      <paginator></paginator>
+                  </td>
+              </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
