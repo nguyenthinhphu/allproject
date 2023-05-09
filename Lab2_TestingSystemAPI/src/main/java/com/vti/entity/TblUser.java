@@ -1,7 +1,6 @@
 package com.vti.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -62,27 +61,13 @@ public class TblUser implements Serializable {
 	private Date birthday;
 	
 	@OneToMany(mappedBy = "user")
-	private List<TblDetailUserJapan> detailUserJapan;
+	private List<TblDetailUserJapan> tblDetailUserJapan;
 	
 	public TblUser(){
 		
 	}
 	
 	
-
-	public TblUser(int userId, MstGroup group, String loginName, String password, String fullName, String fullNameKana,
-			String email, String tel, Date birthday) {
-		super();
-		this.userId = userId;
-		this.group = group;
-		this.loginName = loginName;
-		this.password = password;
-		this.fullName = fullName;
-		this.fullNameKana = fullNameKana;
-		this.email = email;
-		this.tel = tel;
-		this.birthday = birthday;
-	}
 
 	public int getUserId() {
 		return userId;
@@ -190,14 +175,14 @@ public class TblUser implements Serializable {
 
 
 
-	public List<TblDetailUserJapan> getDetailUserJapan() {
-		return detailUserJapan;
+	public List<TblDetailUserJapan> getTblDetailUserJapan() {
+		return tblDetailUserJapan;
 	}
 
 
 
-	public void setDetailUserJapan(List<TblDetailUserJapan> detailUserJapan) {
-		this.detailUserJapan = detailUserJapan;
+	public void setTblDetailUserJapan(List<TblDetailUserJapan> detailUserJapan) {
+		this.tblDetailUserJapan = detailUserJapan;
 	}
 
 	

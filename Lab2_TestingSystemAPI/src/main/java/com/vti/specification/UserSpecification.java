@@ -8,34 +8,60 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.vti.entity.TblUser;
+import com.vti.form.UserFilterForm;
 
-public class UserSpecification implements Specification<TblUser>{
+public class UserSpecification{
 
+public static Specification<TblUser> buildWhere(UserFilterForm filterForm) {
+		
+		Specification<TblUser> where = null;
+		
+		if (filterForm != null) {
+			CustomSpecification fullName = new CustomSpecification("fullName", filterForm.getFullName());
+			CustomSpecification groupId = new CustomSpecification("groupId", filterForm.getGroupId());
+			
+			where = Specification.where(fullName).and(groupId);
+			
+		}
+		
+		return where;
+	}
+
+}
+
+
+class CustomSpecification implements Specification<TblUser> {
+
+		
+		/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
-	private String field;
-	private String operator;
-	private Object value;
-	
-	
-	public UserSpecification(String field, String operator, Object value) {
-		super();
-		this.field = field;
-		this.operator = operator;
-		this.value = value;
-	}
-	
-	@Override
-	public Predicate toPredicate(Root<TblUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+		private String field;
 		
-		if (operator.equalsIgnoreCase("=")) {
-			if (field.equalsIgnoreCase("group")) {
-				return criteriaBuilder.equal(root.get(field).get("groupId"), value.toString());
-			} else {
-				return criteriaBuilder.like(root.get(field), "%" + value.toString() + "%");
-			}
+		private Object value;
+
+		
+
+		public CustomSpecification(String field, Object value) {
+			super();
+			this.field = field;
+			this.value = value;
 		}
-		return null;
-	}
+
+
+
+		@Override
+		public Predicate toPredicate(Root<TblUser> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+			if (field.equalsIgnoreCase("fullName")) {
+				return criteriaBuilder.like(root.get("fullName"), "%" + value.toString() + "%");
+			}
+			
+			if (field.equalsIgnoreCase("groupId")) {
+				return criteriaBuilder.equal(root.get("group").get("groupId"), value.toString());
+			}
+			return null;
+		}
 
 }

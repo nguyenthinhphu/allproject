@@ -3,10 +3,12 @@ package com.vti.DTO;
 import java.util.Date;
 import java.util.List;
 
-import com.vti.entity.TblDetailUserJapan;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserDTO {
 
+	@JsonProperty("userId")
 	private int id;
 	private String loginName;
 	private String fullName;
@@ -14,26 +16,13 @@ public class UserDTO {
 	private String email;
 	private String tel;
 	private String groupName;
-	private List<TblDetailUserJapan> detailJapan;
+	
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date birthday;
 	
+	private List<TblDetailUserJapanDTO> tblDetailUserJapan;
 	
 	public UserDTO() {
-		super();
-	}
-
-
-	public UserDTO(int id, String loginName, String fullName, String fullNameKana, String email, String tel, String groupName,
-			Date birthday) {
-		super();
-		this.id = id;
-		this.loginName = loginName;
-		this.fullName = fullName;
-		this.fullNameKana = fullNameKana;
-		this.email = email;
-		this.tel = tel;
-		this.groupName = groupName;
-		this.birthday = birthday;
 	}
 
 
@@ -117,14 +106,14 @@ public class UserDTO {
 	}
 
 
-	public List<TblDetailUserJapan> getDetailJapan() {
-		return detailJapan;
+	public List<TblDetailUserJapanDTO> getTblDetailUserJapan() {
+		return tblDetailUserJapan;
 	}
 
 
-	public void setDetailJapan(List<TblDetailUserJapan> detailJapan) {
+	public void setTblDetailUserJapan(List<TblDetailUserJapanDTO> detailJapans) {
 		
-		this.detailJapan = detailJapan;
+		this.tblDetailUserJapan = detailJapans;
 	}
 	
 	
