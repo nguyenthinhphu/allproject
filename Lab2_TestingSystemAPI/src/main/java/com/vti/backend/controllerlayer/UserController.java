@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vti.DTO.UserDTO;
 import com.vti.backend.servicelayer.IUserService;
 import com.vti.entity.TblUser;
+import com.vti.form.AccountFormForCreating;
+import com.vti.form.UserCreateFormBasic;
 import com.vti.form.UserFilterForm;
 
 @RestController
@@ -26,7 +30,7 @@ public class UserController {
 
 	@Autowired
 	private IUserService service;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -34,9 +38,20 @@ public class UserController {
 	@GetMapping()
 	public Page<UserDTO> getAllUsers(Pageable pageable, UserFilterForm filterForm) {
 		Page<TblUser> listUsers = service.getAllUsers(pageable, filterForm);
-		List<UserDTO> listUserDTOs = modelMapper.map(listUsers.getContent(), new TypeToken<List<UserDTO>>(){}.getType());
+		List<UserDTO> listUserDTOs = modelMapper.map(listUsers.getContent(), new TypeToken<List<UserDTO>>() {
+		}.getType());
 
 		Page<UserDTO> userDTOPages = new PageImpl<>(listUserDTOs, pageable, listUsers.getTotalElements());
 		return userDTOPages;
-}
 	}
+	
+	// Get All Users
+	
+	@PostMapping()
+	public void createUser(@RequestBody UserCreateFormBasic userform) {
+		
+		
+		service.createUserBasic(userform);
+		
+	}
+}

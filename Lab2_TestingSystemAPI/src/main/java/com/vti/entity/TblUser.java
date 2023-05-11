@@ -31,7 +31,7 @@ public class TblUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USER_ID")
 	private int userId;
 	
@@ -168,9 +168,9 @@ public class TblUser implements Serializable {
 	}
 
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		
-		this.birthday = ChangeFormatDate.changeFormatDate(birthday);
+		this.birthday = birthday;
 	}
 
 

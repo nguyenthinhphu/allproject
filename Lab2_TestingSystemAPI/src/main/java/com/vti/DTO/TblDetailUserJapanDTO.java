@@ -2,10 +2,13 @@ package com.vti.DTO;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TblDetailUserJapanDTO {
 
 	private String nameLevel;
 	
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date endDate;
 	
 	private String total;
