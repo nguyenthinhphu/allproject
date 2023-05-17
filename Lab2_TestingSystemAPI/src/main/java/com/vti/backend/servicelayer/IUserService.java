@@ -11,6 +11,7 @@ public interface IUserService {
 	
 	public Page<TblUser> getAllUsers(Pageable pageable, UserFilterForm filterForm);
 	
+	public TblUser getUserById(int idInput);
 	public void createUserBasic(UserCreateFormBasic form);
 
 }

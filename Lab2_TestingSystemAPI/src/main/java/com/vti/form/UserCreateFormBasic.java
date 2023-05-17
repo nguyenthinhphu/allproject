@@ -2,12 +2,8 @@ package com.vti.form;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.vti.entity.MstJapan;
 
 public class UserCreateFormBasic {
 

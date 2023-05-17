@@ -8,6 +8,10 @@ public class TblDetailUserJapanDTO {
 
 	private String nameLevel;
 	
+	
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private Date startDate;
+	
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date endDate;
 	
@@ -29,6 +33,19 @@ public class TblDetailUserJapanDTO {
 
 	public void setNameLevel(String nameLevel) {
 		this.nameLevel = nameLevel;
+	}
+
+
+	
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 

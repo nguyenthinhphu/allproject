@@ -1,6 +1,7 @@
 package com.vti.form;
 
-public class DepartmentFormForCreating {
+public class GroupFormForUpdate {
+
 	private String name;
 
 	public String getName() {

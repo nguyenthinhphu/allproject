@@ -83,4 +83,10 @@ public class UserService implements IUserService {
 				detailJapanRepository.save(detaiJapan);
 			}
 	}
+
+	@Override
+	public TblUser getUserById(int idInput) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(idInput).get();
+	}
 }
