@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.vti.utils.ChangeFormatDate;
 
 /**
  * TblUser.java
@@ -59,6 +58,9 @@ public class TblUser implements Serializable {
 
 	@Column(name = "BIRTHDAY")
 	private Date birthday;
+	
+	@Column(name = "role")
+	private String role;
 	
 	@OneToMany(mappedBy = "user")
 	private List<TblDetailUserJapan> tblDetailUserJapan;
@@ -185,6 +187,15 @@ public class TblUser implements Serializable {
 		this.tblDetailUserJapan = detailUserJapan;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	
 	
 }
 

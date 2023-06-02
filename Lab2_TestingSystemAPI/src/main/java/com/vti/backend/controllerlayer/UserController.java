@@ -22,6 +22,7 @@ import com.vti.backend.servicelayer.IUserService;
 import com.vti.entity.TblUser;
 import com.vti.form.UserCreateFormBasic;
 import com.vti.form.UserFilterForm;
+import com.vti.form.UserFormForUpdate;
 
 @RestController
 @RequestMapping(value = "api/v1/users")
@@ -73,5 +74,12 @@ public class UserController {
 			userDTO.setTblDetailUserJapan(detailJapan);
 		}
 		return userDTO;
+	}
+	
+	@PostMapping(value = "/{id}")
+	public void updateUser(@PathVariable(name = "id") int id, @RequestBody UserFormForUpdate userformUpdate) {
+		
+		service.updateUser(id, userformUpdate);
+		
 	}
 }

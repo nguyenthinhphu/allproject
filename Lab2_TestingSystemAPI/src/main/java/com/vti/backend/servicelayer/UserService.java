@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.vti.backend.datalayer.IDetailUserJapanRepository;
@@ -17,6 +20,7 @@ import com.vti.entity.TblDetailUserJapan;
 import com.vti.entity.TblUser;
 import com.vti.form.UserCreateFormBasic;
 import com.vti.form.UserFilterForm;
+import com.vti.form.UserFormForUpdate;
 import com.vti.specification.UserSpecification;
 
 @Service
@@ -86,7 +90,40 @@ public class UserService implements IUserService {
 
 	@Override
 	public TblUser getUserById(int idInput) {
-		// TODO Auto-generated method stub
 		return userRepository.findById(idInput).get();
+	}
+
+	@Override
+	@Transactional
+	public void updateUser(int id, UserFormForUpdate userForm) {
+		
+		TblUser account = modelMapper.map(userForm, TblUser.class);
+		account.setUserId(id);
+		
+		userRepository.save(account);
+		
+		if (userForm.getCodeLevel() != null)
+		{
+			// convert form to entity
+			TblDetailUserJapan detaiJapan = modelMapper.map(userForm, TblDetailUserJapan.class);
+			detaiJapan.setUserId(account);
+			detailJapanRepository.save(detaiJapan);
+		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		TblUser user = userRepository.findByLoginName(username);
+		
+		if (user == null)
+		{
+			throw new UsernameNotFoundException(username);
+		}
+		
+		return new org.springframework.security.core.userdetails.User(
+				user.getLoginName(), 
+				user.getPassword(),
+				AuthorityUtils.createAuthorityList(user.getRole()));
 	}
 }

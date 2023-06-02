@@ -7,4 +7,5 @@ import com.vti.entity.TblUser;
 
 public interface IUserRepository extends JpaRepository<TblUser, Integer>, JpaSpecificationExecutor<TblUser>{
 
+	public TblUser findByLoginName(String loginName);
 }

@@ -3,6 +3,8 @@ package com.vti.backend.controllerlayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,6 +85,14 @@ public class GroupController {
 		groupDTO.setGroupName(group.getGroupName());
 
 		return new ResponseEntity<>(groupDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/exception")
+	public void exceptionHandle() throws Exception {
+		// ... Other Logic
+		throw new EntityNotFoundException("..... Infomation of Exception!!!!");
+		
+		//... Other Code
 	}
 
 }
