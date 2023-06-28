@@ -2,11 +2,18 @@ package com.vti.form;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class UserCreateFormBasic {
 
+	@NotBlank(message = "Login Name is not a blank")
+	@Length(max = 15, message = "Login Name is max 15 characters")
 	private String loginName;
 	private int groupId;
 	private String fullName;
@@ -20,6 +27,9 @@ public class UserCreateFormBasic {
 	private String codeLevel;
 	private Date startDate;
 	private Date endDate;
+	
+	@NotNull(message = "Total is not be null")
+	@PositiveOrZero(message = "The total must be greater than or equal 0")
 	private int total;
 
 	public String getCodeLevel() {

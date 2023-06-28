@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import com.vti.form.GroupFormForUpdate;
 @RestController
 @RequestMapping(value = "api/v1/groups")
 @CrossOrigin("*")
+@Validated
 public class GroupController {
 
 	@Autowired
@@ -62,7 +65,7 @@ public class GroupController {
 
 	// Create Department
 	@PostMapping()
-	public ResponseEntity<?> createDepartment(@RequestBody GroupFormForCreating form) {
+	public ResponseEntity<?> createGroup(@RequestBody @Valid GroupFormForCreating form) {
 		groupService.createGroup(form);
 		return new ResponseEntity<String>("Create successfully!", HttpStatus.CREATED);
 	}
@@ -86,13 +89,13 @@ public class GroupController {
 
 		return new ResponseEntity<>(groupDTO, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/exception")
 	public void exceptionHandle() throws Exception {
 		// ... Other Logic
 		throw new EntityNotFoundException("..... Infomation of Exception!!!!");
-		
-		//... Other Code
+
+		// ... Other Code
 	}
 
 }

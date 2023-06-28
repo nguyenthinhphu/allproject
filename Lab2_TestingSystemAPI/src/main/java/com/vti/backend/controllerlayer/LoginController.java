@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/api/v1/login")
 public class LoginController {
 
 	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+
 	@GetMapping()
 	public ResponseEntity<?> login(Principal princ) {
 
 		String loginName = princ.getName();
-		
+
 		log.info(loginName);
-		
+
 		return new ResponseEntity<>("Login Successfully!", HttpStatus.OK);
 	}
 }

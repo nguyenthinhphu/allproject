@@ -28,7 +28,7 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private IUserRepository userRepository;
-	
+
 	@Autowired
 	private IDetailUserJapanRepository detailJapanRepository;
 
@@ -60,11 +60,10 @@ public class UserService implements IUserService {
 			});
 		}
 
-		if (form.getCodeLevel() != null)
-		{
+		if (form.getCodeLevel() != null) {
 			// omit id field
-			TypeMap<UserCreateFormBasic, TblDetailUserJapan> typeMapDetailJapan = modelMapper.getTypeMap(UserCreateFormBasic.class,
-					TblDetailUserJapan.class);
+			TypeMap<UserCreateFormBasic, TblDetailUserJapan> typeMapDetailJapan = modelMapper
+					.getTypeMap(UserCreateFormBasic.class, TblDetailUserJapan.class);
 			if (typeMap == null) { // if not already added
 				// skip field
 				modelMapper.addMappings(new PropertyMap<UserCreateFormBasic, TblDetailUserJapan>() {
@@ -75,17 +74,16 @@ public class UserService implements IUserService {
 				});
 			}
 		}
+		// convert form to entity
+		TblUser account = modelMapper.map(form, TblUser.class);
+		userRepository.save(account);
+
+		if (form.getCodeLevel() != null) {
 			// convert form to entity
-			TblUser account = modelMapper.map(form, TblUser.class);
-			userRepository.save(account);
-			
-			if (form.getCodeLevel() != null)
-			{
-				// convert form to entity
-				TblDetailUserJapan detaiJapan = modelMapper.map(form, TblDetailUserJapan.class);
-				detaiJapan.setUserId(account);
-				detailJapanRepository.save(detaiJapan);
-			}
+			TblDetailUserJapan detaiJapan = modelMapper.map(form, TblDetailUserJapan.class);
+			detaiJapan.setUserId(account);
+			detailJapanRepository.save(detaiJapan);
+		}
 	}
 
 	@Override
@@ -96,14 +94,13 @@ public class UserService implements IUserService {
 	@Override
 	@Transactional
 	public void updateUser(int id, UserFormForUpdate userForm) {
-		
+
 		TblUser account = modelMapper.map(userForm, TblUser.class);
 		account.setUserId(id);
-		
+
 		userRepository.save(account);
-		
-		if (userForm.getCodeLevel() != null)
-		{
+
+		if (userForm.getCodeLevel() != null) {
 			// convert form to entity
 			TblDetailUserJapan detaiJapan = modelMapper.map(userForm, TblDetailUserJapan.class);
 			detaiJapan.setUserId(account);
@@ -113,17 +110,14 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		TblUser user = userRepository.findByLoginName(username);
-		
-		if (user == null)
-		{
+
+		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
-		
-		return new org.springframework.security.core.userdetails.User(
-				user.getLoginName(), 
-				user.getPassword(),
+
+		return new org.springframework.security.core.userdetails.User(user.getLoginName(), user.getPassword(),
 				AuthorityUtils.createAuthorityList(user.getRole()));
 	}
 }

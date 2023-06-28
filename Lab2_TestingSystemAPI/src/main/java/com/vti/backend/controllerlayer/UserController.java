@@ -2,12 +2,15 @@ package com.vti.backend.controllerlayer;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +30,7 @@ import com.vti.form.UserFormForUpdate;
 @RestController
 @RequestMapping(value = "api/v1/users")
 @CrossOrigin("*")
+@Validated
 public class UserController {
 
 	@Autowired
@@ -45,19 +49,18 @@ public class UserController {
 		Page<UserDTO> userDTOPages = new PageImpl<>(listUserDTOs, pageable, listUsers.getTotalElements());
 		return userDTOPages;
 	}
-	
+
 	// Get All Users
-	
+
 	@PostMapping()
-	public void createUser(@RequestBody UserCreateFormBasic userform) {
+	public void createUser(@RequestBody @Valid UserCreateFormBasic userform) {
 		service.createUserBasic(userform);
 	}
-	
+
 	@GetMapping("/{id}")
-	public UserDTO getUserById(@PathVariable(name = "id") int idInput)
-	{
+	public UserDTO getUserById(@PathVariable(name = "id") int idInput) {
 		TblUser user = service.getUserById(idInput);
-		
+
 		UserDTO userDTO = new UserDTO();
 		userDTO.setId(idInput);
 		userDTO.setLoginName(user.getLoginName());
@@ -67,19 +70,20 @@ public class UserController {
 		userDTO.setBirthday(user.getBirthday());
 		userDTO.setEmail(user.getEmail());
 		userDTO.setTel(user.getTel());
-		
-		if (user.getTblDetailUserJapan() != null || user.getTblDetailUserJapan().size() > 0)
-		{
-			List<TblDetailUserJapanDTO> detailJapan = modelMapper.map(user.getTblDetailUserJapan(), new TypeToken<List<TblDetailUserJapanDTO>>() {}.getType());
+
+		if (user.getTblDetailUserJapan() != null || user.getTblDetailUserJapan().size() > 0) {
+			List<TblDetailUserJapanDTO> detailJapan = modelMapper.map(user.getTblDetailUserJapan(),
+					new TypeToken<List<TblDetailUserJapanDTO>>() {
+					}.getType());
 			userDTO.setTblDetailUserJapan(detailJapan);
 		}
 		return userDTO;
 	}
-	
+
 	@PostMapping(value = "/{id}")
 	public void updateUser(@PathVariable(name = "id") int id, @RequestBody UserFormForUpdate userformUpdate) {
-		
+
 		service.updateUser(id, userformUpdate);
-		
+
 	}
 }
