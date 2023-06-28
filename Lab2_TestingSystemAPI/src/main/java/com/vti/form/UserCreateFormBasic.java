@@ -2,11 +2,15 @@ package com.vti.form;
 
 import java.util.Date;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,15 +25,20 @@ public class UserCreateFormBasic {
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
+	
+	@Email
 	private String email;
 	private String tel;
 	private String password;
 	private String codeLevel;
+	@PastOrPresent
 	private Date startDate;
+	@FutureOrPresent
 	private Date endDate;
 	
 	@NotNull(message = "Total is not be null")
 	@PositiveOrZero(message = "The total must be greater than or equal 0")
+	@Range(min=1, max = 180, message = "Total is range 1 to 180")
 	private int total;
 
 	public String getCodeLevel() {

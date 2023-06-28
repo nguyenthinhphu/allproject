@@ -8,4 +8,6 @@ import com.vti.entity.MstGroup;
 public interface IGroupRepository extends JpaRepository<MstGroup, Integer>, JpaSpecificationExecutor<MstGroup>{
 
 	public MstGroup findByGroupName(String name);
+	
+	public boolean existsByGroupName(String name);
 }

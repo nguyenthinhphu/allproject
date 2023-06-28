@@ -51,5 +51,11 @@ public class GroupService implements IGroupService{
 		return groupRepository.findByGroupName(nameGroup);
 	}
 
+	@Override
+	public boolean isGroupExistsByName(String name) {
+		// TODO Auto-generated method stub
+		return groupRepository.existsByGroupName(name);
+	}
+
 	
 }

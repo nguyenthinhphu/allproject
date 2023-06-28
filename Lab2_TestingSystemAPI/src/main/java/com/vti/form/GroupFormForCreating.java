@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.vti.validation.GroupNameNotExists;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,8 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GroupFormForCreating {
 
-	@NotBlank(message = "Name of Group not be null value")
-	@Length(max = 255, message = "Max of name is 255 characters")
+	@NotBlank(message = "{Group.createGroup.form.name.NotBlank}")
+	@Length(max = 255, message = "{Group.createGroup.form.name.Length}")
+	@GroupNameNotExists(message = "{Group.createGroup.form.name.NotExists}")
 	private String name;
 
 }

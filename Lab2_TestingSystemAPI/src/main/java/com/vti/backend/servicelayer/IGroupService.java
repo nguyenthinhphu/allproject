@@ -17,4 +17,6 @@ public interface IGroupService {
 	public void updateGroupById(int id, GroupFormForUpdate form);
 
 	public MstGroup getGroupByName(String nameGroup);
+	
+	public boolean isGroupExistsByName(String name);
 }
