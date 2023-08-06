@@ -1,0 +1,15 @@
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\bin\Debug\net6.0\Basic.Net6.exe
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\bin\Debug\net6.0\Basic.Net6.deps.json
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\bin\Debug\net6.0\Basic.Net6.runtimeconfig.json
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\bin\Debug\net6.0\Basic.Net6.dll
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\bin\Debug\net6.0\Basic.Net6.pdb
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.csproj.AssemblyReference.cache
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.AssemblyInfoInputs.cache
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.AssemblyInfo.cs
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.csproj.CoreCompileInputs.cache
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.dll
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\refint\Basic.Net6.dll
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.pdb
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\Basic.Net6.genruntimeconfig.cache
+D:\Documents\TECH\CSharp\trainning\Basic.Net6\Basic.Net6\obj\Debug\net6.0\ref\Basic.Net6.dll
